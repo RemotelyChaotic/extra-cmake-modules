@@ -32,6 +32,7 @@ set_package_properties(
 )
 
 add_subdirectory(ECMAddTests)
+add_subdirectory(ECMCheckOutboundLicenseTest)
 add_subdirectory(ECMGenerateExportHeaderTest)
 add_subdirectory(ECMGenerateHeadersTest)
 add_subdirectory(ECMSetupVersionTest)
