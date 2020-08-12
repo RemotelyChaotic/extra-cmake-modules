@@ -46,9 +46,12 @@ function(ecm_check_outbound_license)
 
     file(COPY ${CMAKE_SOURCE_DIR}/modules/check-outbound-license.py DESTINATION ${CMAKE_BINARY_DIR})
 
-    # TODO only execute once when using multiple tests
-    message("Executing reuse tool...")
-    execute_process(COMMAND bash -c "reuse spdx" WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_FILE ${CMAKE_BINARY_DIR}/spdx.txt)
+    # TODO test only run when running CMake, make it an implicit call when running tests
+    if (NOT DEFINED SPDX_TOOL_EXECUTED)
+        message("Executing reuse tool...")
+        execute_process(COMMAND bash -c "reuse spdx" WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_FILE ${CMAKE_BINARY_DIR}/spdx.txt)
+        set(SPDX_TOOL_EXECUTED TRUE PARENT_SCOPE)
+    endif()
 
     add_test(NAME licensecheck_${ARG_TEST_NAME} COMMAND python3 ${CMAKE_BINARY_DIR}/check-outbound-license.py -l ${ARG_LICENSE} -s ${CMAKE_BINARY_DIR}/spdx.txt -i ${OUTPUT_FILE})
 endfunction()
