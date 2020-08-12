@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: 2020 Andreas Cord-Landwehr <cordlandwehr@kde.org>
+# SPDX-License-Identifier: BSD-3-Clause
 
 # key is the target out-bound license
 # value list are licenses that are compatible with the target license
