@@ -3,13 +3,27 @@
 # key is the target out-bound license
 # value list are licenses that are compatible with the target license
 compatibilityMatrix = {
+    "MIT": [
+        "CC0-1.0",
+        "MIT"],
+    "BSD-2-Clause": [
+        "CC0-1.0",
+        "MIT",
+        "BSD-2-Clause"],
     "LGPL-2.0-only": [
+        "CC0-1.0",
+        "MIT",
+        "BSD-2-Clause",
+        "BSD-3-Clause"],
+    "LGPL-2.0-only": [
+        "CC0-1.0",
         "LGPL-2.0-only",
         "LGPL-2.0-or-later",
         "MIT",
         "BSD-2-Clause",
         "BSD-3-Clause"],
     "LGPL-2.1-only": [
+        "CC0-1.0",
         "LGPL-2.0-or-later",
         "LGPL-2.1-only",
         "LGPL-2.1-or-later",
@@ -17,6 +31,7 @@ compatibilityMatrix = {
         "BSD-2-Clause",
         "BSD-3-Clause"],
     "LGPL-3.0-only": [
+        "CC0-1.0",
         "LGPL-2.0-or-later",
         "LGPL-2.1-or-later",
         "LGPL-3.0-only",
@@ -25,6 +40,7 @@ compatibilityMatrix = {
         "BSD-2-Clause",
         "BSD-3-Clause"],
     "GPL-2.0-only": [
+        "CC0-1.0",
         "LGPL-2.0-only",
         "LGPL-2.1-only",
         "LGPL-2.0-or-later",
@@ -35,6 +51,7 @@ compatibilityMatrix = {
         "BSD-2-Clause",
         "BSD-3-Clause"],
     "GPL-3.0-only": [
+        "CC0-1.0",
         "LGPL-2.0-or-later",
         "LGPL-2.1-or-later",
         "LGPL-3.0-only",

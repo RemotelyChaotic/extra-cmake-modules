@@ -3,10 +3,51 @@ set(MODULES_DIR "${ECM_SOURCE_DIR}/modules")
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../modules)
 include(ECMCheckOutboundLicense)
 
+# check relative and absolute input paths
+ecm_check_outbound_license(
+LICENSE LGPL-2.1-only
+TEST_NAME absolute-path-handling
+FILES
+    testdata/BSD-2-Clause.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/testdata/LGPL-2.1-or-later.cpp
+)
+
+# check for valid LGPL-2.1-only
 ecm_check_outbound_license(
 LICENSE LGPL-2.1-only
 TEST_NAME valid-LGPL-2.1-only
 FILES
-    testcase_valid_LGPL-2.1/BSD-2-Clause.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/testcase_valid_LGPL-2.1/LGPL-2.1-or-later.cpp
+    testdata/BSD-2-Clause.cpp
+    testdata/LGPL-2.1-or-later.cpp
+)
+
+# check for valid LGPL-3.0-only
+ecm_check_outbound_license(
+LICENSE LGPL-3.0-only
+TEST_NAME valid-LGPL-3.0-only
+FILES
+    testdata/BSD-2-Clause.cpp
+    testdata/LGPL-2.1-or-later.cpp
+    testdata/LGPL-3.0-only.cpp
+)
+
+# check for valid GPL-2.0-only
+ecm_check_outbound_license(
+LICENSE GPL-2.0-only
+TEST_NAME valid-GPL-2.0-only
+FILES
+    testdata/BSD-2-Clause.cpp
+    testdata/LGPL-2.1-or-later.cpp
+    testdata/GPL-2.0-only.cpp
+)
+
+# check for valid GPL-3.0-only
+ecm_check_outbound_license(
+LICENSE GPL-3.0-only
+TEST_NAME valid-GPL-3.0-only
+FILES
+    testdata/BSD-2-Clause.cpp
+    testdata/LGPL-2.1-or-later.cpp
+    testdata/LGPL-3.0-only.cpp
+    testdata/GPL-3.0-only.cpp
 )
