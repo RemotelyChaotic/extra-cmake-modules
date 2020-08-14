@@ -12,6 +12,13 @@ FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/testdata/LGPL-2.1-or-later.cpp
 )
 
+# check test case generation wihout TEST_NAME statement
+ecm_check_outbound_license(
+LICENSE LGPL-2.1-only
+FILES
+    testdata/BSD-2-Clause.cpp
+)
+
 # check for valid LGPL-2.1-only
 ecm_check_outbound_license(
 LICENSE LGPL-2.1-only

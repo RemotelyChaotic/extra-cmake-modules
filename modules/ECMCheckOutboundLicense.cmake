@@ -48,7 +48,8 @@
 #                 or be absolute paths.
 #
 # ``TEST_NAME`` : Optional parameter that defines the name of the generated test case.
-#                 If no name is defined, the relative path to the test directory is used.
+#                 If no name is defined, the relative path to the test directory with appended
+#                 license name is used. Every test has "licensecheck_" as prefix.
 #
 # Since 5.74.0
 
@@ -77,6 +78,12 @@ function(ecm_check_outbound_license)
 
     if(NOT ARG_FILES)
         message(FATAL_ERROR "No FILES argument given to ecm_check_outbound_license")
+    endif()
+
+    if(NOT ARG_TEST_NAME)
+        # compute test name based on licensecheck_<relative-path>_<licence> if not name given
+        string(REPLACE "${CMAKE_SOURCE_DIR}/" "" TEMP_TEST_NAME "${CMAKE_CURRENT_SOURCE_DIR}_${ARG_LICENSE}")
+        string(MAKE_C_IDENTIFIER ${TEMP_TEST_NAME} ARG_TEST_NAME)
     endif()
 
     # generate file with list of relative file paths
