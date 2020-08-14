@@ -12,7 +12,7 @@ compatibilityMatrix = {
         "CC0-1.0",
         "MIT",
         "BSD-2-Clause"],
-    "LGPL-2.0-only": [
+    "BSD-3-Clause": [
         "CC0-1.0",
         "MIT",
         "BSD-2-Clause",
@@ -66,9 +66,11 @@ compatibilityMatrix = {
         "BSD-3-Clause"]
 }
 
-# check that all files have compatible licenses with the taret license
-# license paramter shall be base license name (e.g. "LGPL-2.1" or "MIT")
 def check_outbound_license(license, files, spdxDictionary):
+    """
+    Asserts that the list of source files @p files, when combined into
+    a library or executable, can be delivered under the combined license @p license .
+    """
     print("Checking Target License: " + license)
     if not license in compatibilityMatrix:
         print("Error: unknown license selected")
