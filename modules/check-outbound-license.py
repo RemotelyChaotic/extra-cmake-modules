@@ -76,7 +76,7 @@ def check_outbound_license(license, files, spdxDictionary):
         print("Error: unknown license selected")
         return False
 
-    missingCompatibleLicense = False
+    allLicensesAreCompatible = True
 
     for sourceFile in files:
         compatible = False
@@ -85,10 +85,10 @@ def check_outbound_license(license, files, spdxDictionary):
             if fileLicense in compatibilityMatrix[license]:
                 compatible = True
                 print("OK " + sourceFileStripped + " : " + fileLicense)
-        if compatible == False:
-            missingCompatibleLicense = True
+        if not compatible:
+            allLicensesAreCompatible = False
             print("-- " + sourceFileStripped + " : ( " + ", ".join([str(i) for i in spdxDictionary[sourceFileStripped]]) + " )")
-    return missingCompatibleLicense == False
+    return allLicensesAreCompatible
 
 if __name__ == '__main__':
     print("Parsing SPDX BOM file")
