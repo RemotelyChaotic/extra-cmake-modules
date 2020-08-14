@@ -2,8 +2,8 @@
 # SPDX-FileCopyrightText: 2020 Andreas Cord-Landwehr <cordlandwehr@kde.org>
 # SPDX-License-Identifier: BSD-3-Clause
 
-# key is the target out-bound license
-# value list are licenses that are compatible with the target license
+# key    : outbound license identifier
+# values : list of acceptable licenses that are compatible with outbound license
 compatibilityMatrix = {
     "MIT": [
         "CC0-1.0",
