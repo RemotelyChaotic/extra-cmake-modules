@@ -1,5 +1,4 @@
-set(MODULES_DIR "${ECM_SOURCE_DIR}/modules")
-
+set(ECM_MODULE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../modules)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../modules)
 include(ECMCheckOutboundLicense)
 

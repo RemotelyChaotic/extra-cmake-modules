@@ -54,7 +54,7 @@
 #
 # ``TEST_NAME`` : Optional parameter that defines the name of the generated test case.
 #                 If no name is defined, the relative path to the test directory with appended
-#                 license name is used. Every test has "licensecheck_" as prefix.
+#                 license name is used. Every test has ``licensecheck_`` as prefix.
 #
 # ``WILL_FAIL`` : Optional parameter that inverts the test result. This parameter is usually only
 #                 used for tests of the module.
@@ -120,7 +120,7 @@ function(ecm_check_outbound_license)
         endif()
     endforeach()
 
-    file(COPY ${CMAKE_SOURCE_DIR}/modules/check-outbound-license.py DESTINATION ${CMAKE_BINARY_DIR})
+    file(COPY ${ECM_MODULE_DIR}/check-outbound-license.py DESTINATION ${CMAKE_BINARY_DIR})
 
     add_test(
         NAME licensecheck_${ARG_TEST_NAME}
