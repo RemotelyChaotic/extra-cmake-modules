@@ -1,5 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2020 John Doe <example@nomail.com>
+    SPDX-FileCopyrightText: 2020 John Doe <nomail@example.com>
     SPDX-License-Identifier: GPL-2.0-only
 */
 

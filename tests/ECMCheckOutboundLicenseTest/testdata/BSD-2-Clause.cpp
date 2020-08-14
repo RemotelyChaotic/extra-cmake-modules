@@ -1,5 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2020 Jane Doe <example@nomail.com>
+    SPDX-FileCopyrightText: 2020 Jane Doe <nomail@example.com>
     SPDX-License-Identifier: BSD-2-Clause
 */
 
