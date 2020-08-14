@@ -20,8 +20,6 @@
 #     * Python3 must be available.
 #     * The REUSE tool must be available, which generates the bill-of-materials
 #       by running ``reuse spdx`` on the tested directory.
-# In case that the REUSE tool is not found, a warning is printed but the tests will not
-# be marked as failed.
 #
 # ::
 #
@@ -58,6 +56,16 @@
 # SPDX-FileCopyrightText: 2020 Andreas Cord-Landwehr <cordlandwehr@kde.org>
 # SPDX-License-Identifier: BSD-3-Clause
 
+set(SPDX_BOM_OUTPUT "${CMAKE_BINARY_DIR}/spdx.txt")
+
+# test fixture for generating SPDX bill of materials
+add_test(
+    NAME generate_spdx_bom
+    COMMAND bash -c "reuse spdx > ${SPDX_BOM_OUTPUT}"
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+set_tests_properties(generate_spdx_bom PROPERTIES FIXTURES_SETUP SPDX_BOM)
+
 function(ecm_check_outbound_license)
     set(_oneValueArgs LICENSE TEST_NAME)
     set(_multiValueArgs FILES)
@@ -88,12 +96,9 @@ function(ecm_check_outbound_license)
 
     file(COPY ${CMAKE_SOURCE_DIR}/modules/check-outbound-license.py DESTINATION ${CMAKE_BINARY_DIR})
 
-    # TODO test only run when running CMake, make it an implicit call when running tests
-    if (NOT DEFINED SPDX_TOOL_EXECUTED)
-        message("Executing reuse tool...")
-        execute_process(COMMAND bash -c "reuse spdx" WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_FILE ${CMAKE_BINARY_DIR}/spdx.txt)
-        set(SPDX_TOOL_EXECUTED TRUE PARENT_SCOPE)
-    endif()
-
-    add_test(NAME licensecheck_${ARG_TEST_NAME} COMMAND python3 ${CMAKE_BINARY_DIR}/check-outbound-license.py -l ${ARG_LICENSE} -s ${CMAKE_BINARY_DIR}/spdx.txt -i ${OUTPUT_FILE})
+    add_test(
+        NAME licensecheck_${ARG_TEST_NAME}
+        COMMAND python3 ${CMAKE_BINARY_DIR}/check-outbound-license.py -l ${ARG_LICENSE} -s ${CMAKE_BINARY_DIR}/spdx.txt -i ${OUTPUT_FILE}
+    )
+    set_tests_properties(licensecheck_${ARG_TEST_NAME} PROPERTIES FIXTURES_REQUIRED SPDX_BOM)
 endfunction()
