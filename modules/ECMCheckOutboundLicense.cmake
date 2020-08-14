@@ -29,7 +29,8 @@
 #
 #   ecm_check_outbound_license(LICENSE <outbound-license>
 #                              FILES <source-files>
-#                              [TEST_NAME <name>])
+#                              [TEST_NAME <name>]
+#                              [WILL_FAIL])
 #
 # This method adds a custom unit test to ensure the specified outbound license to be
 # compatible with the specified license headers. Note that a convenient way is to use
@@ -54,6 +55,9 @@
 # ``TEST_NAME`` : Optional parameter that defines the name of the generated test case.
 #                 If no name is defined, the relative path to the test directory with appended
 #                 license name is used. Every test has "licensecheck_" as prefix.
+#
+# ``WILL_FAIL`` : Optional parameter that inverts the test result. This parameter is usually only
+#                 used for tests of the module.
 #
 # Since 5.74.0
 
@@ -82,9 +86,10 @@ function(ecm_check_outbound_license)
         return()
     endif()
 
+    set(_options WILL_FAIL)
     set(_oneValueArgs LICENSE TEST_NAME)
     set(_multiValueArgs FILES)
-    cmake_parse_arguments(ARG "" "${_oneValueArgs}" "${_multiValueArgs}" ${ARGN} )
+    cmake_parse_arguments(ARG "${_options}" "${_oneValueArgs}" "${_multiValueArgs}" ${ARGN} )
 
     if(NOT ARG_LICENSE)
         message(FATAL_ERROR "No LICENSE argument given to ecm_check_outbound_license")
@@ -122,4 +127,5 @@ function(ecm_check_outbound_license)
         COMMAND python3 ${CMAKE_BINARY_DIR}/check-outbound-license.py -l ${ARG_LICENSE} -s ${SPDX_BOM_OUTPUT} -i ${OUTPUT_FILE}
     )
     set_tests_properties(licensecheck_${ARG_TEST_NAME} PROPERTIES FIXTURES_REQUIRED SPDX_BOM)
+    set_tests_properties(licensecheck_${ARG_TEST_NAME} PROPERTIES WILL_FAIL ${ARG_WILL_FAIL})
 endfunction()

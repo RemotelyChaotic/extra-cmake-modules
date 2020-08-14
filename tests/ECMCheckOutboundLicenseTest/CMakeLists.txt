@@ -58,3 +58,23 @@ FILES
     testdata/LGPL-3.0-only.cpp
     testdata/GPL-3.0-only.cpp
 )
+
+# check for invalid GPL-3.0-only
+ecm_check_outbound_license(
+LICENSE LGPL-2.1-only
+TEST_NAME invalid-LGPL-2.1-only
+FILES
+    testdata/LGPL-2.0-only.cpp
+    testdata/GPL-3.0-only.cpp
+WILL_FAIL
+)
+
+# check for invalid GPL-3.0-only
+ecm_check_outbound_license(
+LICENSE GPL-3.0-only
+TEST_NAME invalid-GPL-3.0-only
+FILES
+    testdata/GPL-2.0-only.cpp
+    testdata/GPL-3.0-only.cpp
+WILL_FAIL
+)
