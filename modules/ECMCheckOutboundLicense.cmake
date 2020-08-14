@@ -21,6 +21,10 @@
 #     * The REUSE tool must be available, which generates the bill-of-materials
 #       by running ``reuse spdx`` on the tested directory.
 #
+# When this module is included, a ``SKIP_LICENSE_TESTS`` option is added (default
+# OFF). Turning this option on skips the generation of license tests, which might
+# be convenient if licenses shall not be tested in all build configurations.
+#
 # ::
 #
 #   ecm_check_outbound_license(LICENSE <outbound-license>
@@ -57,17 +61,27 @@
 # SPDX-FileCopyrightText: 2020 Andreas Cord-Landwehr <cordlandwehr@kde.org>
 # SPDX-License-Identifier: BSD-3-Clause
 
+option(SKIP_LICENSE_TESTS "Skip outbound license tests" OFF)
+
 set(SPDX_BOM_OUTPUT "${CMAKE_BINARY_DIR}/spdx.txt")
 
 # test fixture for generating SPDX bill of materials
-add_test(
-    NAME generate_spdx_bom
-    COMMAND bash -c "reuse spdx > ${SPDX_BOM_OUTPUT}"
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-)
-set_tests_properties(generate_spdx_bom PROPERTIES FIXTURES_SETUP SPDX_BOM)
+if(SKIP_LICENSE_TESTS)
+    message(STATUS "Skipping execution of outbound license tests.")
+else()
+    add_test(
+        NAME generate_spdx_bom
+        COMMAND bash -c "reuse spdx > ${SPDX_BOM_OUTPUT}"
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    )
+    set_tests_properties(generate_spdx_bom PROPERTIES FIXTURES_SETUP SPDX_BOM)
+endif()
 
 function(ecm_check_outbound_license)
+    if(SKIP_LICENSE_TESTS)
+        return()
+    endif()
+
     set(_oneValueArgs LICENSE TEST_NAME)
     set(_multiValueArgs FILES)
     cmake_parse_arguments(ARG "" "${_oneValueArgs}" "${_multiValueArgs}" ${ARGN} )
@@ -89,7 +103,7 @@ function(ecm_check_outbound_license)
     # generate file with list of relative file paths
     string(REPLACE "${CMAKE_BINARY_DIR}/" "" RELATIVE_PREFIX_PATH ${CMAKE_CURRENT_BINARY_DIR})
     set(OUTPUT_FILE ${CMAKE_BINARY_DIR}/licensecheck_${ARG_TEST_NAME}.txt)
-    message("Generate test input file: ${OUTPUT_FILE}")
+    message(STATUS "Generate test input file: ${OUTPUT_FILE}")
     file(REMOVE ${OUTPUT_FILE})
     foreach(_file ${ARG_FILES})
         # check script expects files to start with "./", which must be relative to CMAKE_SOURCE_DIR
@@ -105,7 +119,7 @@ function(ecm_check_outbound_license)
 
     add_test(
         NAME licensecheck_${ARG_TEST_NAME}
-        COMMAND python3 ${CMAKE_BINARY_DIR}/check-outbound-license.py -l ${ARG_LICENSE} -s ${CMAKE_BINARY_DIR}/spdx.txt -i ${OUTPUT_FILE}
+        COMMAND python3 ${CMAKE_BINARY_DIR}/check-outbound-license.py -l ${ARG_LICENSE} -s ${SPDX_BOM_OUTPUT} -i ${OUTPUT_FILE}
     )
     set_tests_properties(licensecheck_${ARG_TEST_NAME} PROPERTIES FIXTURES_REQUIRED SPDX_BOM)
 endfunction()
