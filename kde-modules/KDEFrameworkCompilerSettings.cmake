@@ -32,7 +32,7 @@ add_definitions(#-DQT_NO_CAST_TO_ASCII
                 #-DQT_NO_URL_CAST_FROM_STRING
                 #-DQT_NO_CAST_FROM_BYTEARRAY
                 #-DQT_NO_SIGNALS_SLOTS_KEYWORDS
-                -DQT_USE_QSTRINGBUILDER
+                #-DQT_USE_QSTRINGBUILDER
                 -DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT
                )
 
