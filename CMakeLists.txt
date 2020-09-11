@@ -71,19 +71,19 @@ set(MAN_INSTALL_DIR ${SHARE_INSTALL_DIR}/man
 # Documentation
 #
 
-add_subdirectory(docs)
+#add_subdirectory(docs)
 
 
 #
 # Tests
 #
 
-option(BUILD_TESTING "Build automated tests." ON)
-add_feature_info(BUILD_TESTING BUILD_TESTING "Build automated tests.")
-if(BUILD_TESTING)
-    enable_testing()
-    add_subdirectory(tests)
-endif()
+#option(BUILD_TESTING "Build automated tests." ON)
+#add_feature_info(BUILD_TESTING BUILD_TESTING "Build automated tests.")
+#if(BUILD_TESTING)
+#    enable_testing()
+#    add_subdirectory(tests)
+#endif()
 
 
 #

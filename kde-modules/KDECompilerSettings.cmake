@@ -62,6 +62,10 @@ if (ECM_SOURCE_UNDER_VERSION_CONTROL AND NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONF
         "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
+if(CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "Default")
+  set(KDE_DEBUG ON)
+endif()
+
 ############################################################
 # Toolchain minimal requirements
 #
